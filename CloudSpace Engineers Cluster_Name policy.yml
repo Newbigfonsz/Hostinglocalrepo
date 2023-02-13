@@ -1,0 +1,77 @@
+---
+# CloudSpace Engineers Cluster_Name policy
+- PolicyName: CloudSpaceEngineersClusterNamePolicy
+  PolicyDocument:
+    Version: '2012-10-17'
+    Statement:
+    - Effect: Allow
+      Action:
+        - '*'
+      Resource: '*'
+      NotAction:
+        - 'aws-portal:ViewBilling'
+        - 'aws:CreateBudget'
+        - 'aws:ModifyBudget'
+        - 'aws:ViewBudget'
+        - 'aws:CancelBudgetAction'
+        - 'aws:CreateCostCheckupReport'
+        - 'aws:CreateCostExplorerReport'
+        - 'aws:CreateCostReport'
+        - 'aws:DownloadCostReport'
+        - 'aws:GenerateAnomalyReport'
+        - 'aws:RunCostUsageReport'
+        - 'aws:RunReport'
+        - 'aws:UpdateReportDefinition'
+        - 'aws:ViewCostExplorerReport'
+        - 'aws:ViewCostReport'
+        - 'aws:ViewReport'
+      Condition:
+        StringNotEquals:
+          aws:PrincipalArn:
+            - 'arn:aws:iam::*:root'
+
+# NAS Financial Group Security Team policy
+- PolicyName: NASFinancialGroupSecurityTeamPolicy
+  PolicyDocument:
+    Version: '2012-10-17'
+    Statement:
+    - Effect: Allow
+      Action:
+        - '*'
+      Resource: '*'
+
+# NAS Financial Group Operations Team policy
+- PolicyName: NASFinancialGroupOperationsTeamPolicy
+  PolicyDocument:
+    Version: '2012-10-17'
+    Statement:
+    - Effect: Allow
+      Action:
+        - '*'
+      Resource:
+        - !Sub 'arn:aws:ec2:us-east-1:*:*'
+        - !Sub 'arn:aws:rds:us-east-1:*:*'
+        - !Sub 'arn:aws:s3:us-east-1:*:*'
+        - !Sub 'arn:aws:lambda:us-east-1:*:*'
+        - !Sub 'arn:aws:cloudwatch:us-east-1:*:*'
+      NotAction:
+        - 'aws:CreateNetworkAcl'
+        - 'aws:CreateNetworkAclEntry'
+        - 'aws:DeleteNetworkAcl'
+        - 'aws:DeleteNetworkAclEntry'
+        - 'aws:ReplaceNetworkAclEntry'
+        - 'aws:UpdateNetworkAclEntry'
+        - 'aws:CreateRoute'
+        - 'aws:ReplaceRoute'
+        - 'aws:DeleteRoute'
+        - 'aws:CreateRouteTable'
+        - 'aws:CreateVpc'
+        - 'aws:ModifyVpcAttribute'
+        - 'aws:AcceptVpcPeeringConnection'
+        - 'aws:CreateVpcPeeringConnection'
+        - 'aws:DeleteVpcPeeringConnection'
+        - 'aws:RejectVpcPeeringConnection'
+        - 'aws:AttachInternetGateway'
+        - 'aws:CreateInternetGateway'
+        - 'aws:DeleteInternetGateway'
+        - 'aws:DetachInternetGateway'

@@ -1,0 +1,64 @@
+---
+# AWS IAM groups and policies
+
+# CloudSpace Engineers Cluster_Name group
+- GroupName: CloudSpaceEngineersClusterName
+  Policies:
+    - PolicyName: AdministratorAccess-NoBilling
+      PolicyArn: arn:aws:iam::aws:policy/AdministratorAccess
+
+# NAS Financial Group Security Team group
+- GroupName: NASFinancialGroupSecurityTeam
+  Policies:
+    - PolicyName: AdministratorAccess
+      PolicyArn: arn:aws:iam::aws:policy/AdministratorAccess
+
+# NAS Financial Group Operations Team group
+- GroupName: NASFinancialGroupOperationsTeam
+  Policies:
+    - PolicyName: RegionRestrictedAdminAccess
+      PolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Action:
+            - '*'
+          Resource:
+            - !Sub 'arn:aws:ec2:us-east-1:*:*'
+            - !Sub 'arn:aws:rds:us-east-1:*:*'
+            - !Sub 'arn:aws:s3:us-east-1:*:*'
+            - !Sub 'arn:aws:lambda:us-east-1:*:*'
+            - !Sub 'arn:aws:cloudwatch:us-east-1:*:*'
+          NotAction:
+            - 'aws:CreateNetworkAcl'
+            - 'aws:CreateNetworkAclEntry'
+            - 'aws:DeleteNetworkAcl'
+            - 'aws:DeleteNetworkAclEntry'
+            - 'aws:ReplaceNetworkAclEntry'
+            - 'aws:UpdateNetworkAclEntry'
+            - 'aws:CreateRoute'
+            - 'aws:ReplaceRoute'
+            - 'aws:DeleteRoute'
+            - 'aws:CreateRouteTable'
+            - 'aws:CreateVpc'
+            - 'aws:ModifyVpcAttribute'
+            - 'aws:AcceptVpcPeeringConnection'
+            - 'aws:CreateVpcPeeringConnection'
+            - 'aws:DeleteVpcPeeringConnection'
+            - 'aws:RejectVpcPeeringConnection'
+            - 'aws:AttachInternetGateway'
+            - 'aws:CreateInternetGateway'
+            - 'aws:DeleteInternetGateway'
+            - 'aws:DetachInternetGateway'
+
+# IAM users
+- UserName: cloudspace-engineers
+  Groups:
+    - CloudSpaceEngineersClusterName
+- UserName: nas-security-team
+  Groups:
+    - NASFinancialGroupSecurityTeam
+- UserName: nas-operations-team
+  Groups:
+    - NASFinancialGroupOperationsTeam
+

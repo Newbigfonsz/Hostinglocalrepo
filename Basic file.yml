@@ -1,0 +1,21 @@
+---
+AWSTemplateFormatVersion: "2010-09-09"
+Resources:
+  EC2Instance:
+    Type: "AWS::EC2::Instance"
+    Properties:
+      ImageId: "ami-0aa7d40eeae50c9a9"
+      InstanceType: "t2.micro"
+      KeyName: "mylinux"
+      NetworkInterfaces:
+        - AssociatePublicIpAddress: true
+          DeviceIndex: 0
+          SubnetId: "subnet-09e889acf01a0788f"
+          GroupSet:
+            - "sg-07df407060941cde5"
+      UserData:
+        Fn::Base64: !Sub |
+          #!/bin/bash
+          echo "Hello, World!" > index.html
+          nohup busybox httpd -f -p 8080 &
+

@@ -1,0 +1,80 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Resources:
+  CloudSpaceEngineerRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - 'arn:aws:iam::*:root'
+            Action: 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: CloudSpaceEngineerFullAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: '*'
+                Resource: '*'
+              - Effect: Deny
+                Action: 'aws-portal:*'
+                Resource: '*'
+
+  NASSecurityTeamRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - 'arn:aws:iam::*:root'
+            Action: 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: NASSecurityTeamFullAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: '*'
+                Resource: '*'
+
+  NASOperationsTeamRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS:
+                - 'arn:aws:iam::*:root'
+            Action: 'sts:AssumeRole'
+      Path: /
+      Policies:
+        - PolicyName: NASOperationsTeamLimitedAccess
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action: '*'
+                Resource: '*'
+              - Effect: Deny
+                Action: '*'
+                NotAction:
+                  - 'ec2:*'
+                  - 'rds:*'
+                  - 's3:*'
+                  - 'cloudfront:*'
+                  - 'route53:*'
+                  - 'elasticbeanstalk:*'
+                Resource: '*'
+                Condition:
+                  StringNotEquals:
+                    aws:RequestedRegion: us-east-1

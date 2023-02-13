@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+    const selfCareTips = [
+  "Take a relaxing bath",
+  "Meditate for 10 minutes",
+  "Write in a journal",
+  "Read a book for 30 minutes",
+  "Go for a walk",
+  "Try a new hobby",
+  "Practice deep breathing exercises",
+  "Listen to calming music",
+  "Spend time with friends or family",
+  "Treat yourself to your favorite food or drink"
+];
+
+function generateTip() {
+  const randomIndex = Math.floor(Math.random() * selfCareTips.length);
+  const tip = selfCareTips[randomIndex];
+  return tip;
+}
+
+document.querySelector("#tipButton").addEventListener("click", function() {
+  document.querySelector("#tip").innerHTML = generateTip();
+});
+
+    </script>
+  </head>
+  <body>
+    <h1>Hello, World!</h1>clear
+    
+  </body>
+</html>
